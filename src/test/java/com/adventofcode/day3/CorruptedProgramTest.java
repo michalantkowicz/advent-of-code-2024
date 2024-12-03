@@ -23,6 +23,19 @@ class CorruptedProgramTest {
         assertThat(sum).isEqualTo(expected);
     }
 
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("provideSecondInput")
+    void sumMultiplicationsIgnoringDonts(String description, String input, long expected) {
+        // given
+        CorruptedProgram corruptedProgram = new CorruptedProgram();
+
+        // when
+        long sum = corruptedProgram.sumMultiplicationsIgnoringDonts(input);
+
+        // then
+        assertThat(sum).isEqualTo(expected);
+    }
+
     private static Stream<Arguments> provideFirstInput() {
         return Stream.of(
                 Arguments.of("0.in", readFile("/day3/0.in"), 161),
@@ -30,4 +43,10 @@ class CorruptedProgramTest {
         );
     }
 
+    private static Stream<Arguments> provideSecondInput() {
+        return Stream.of(
+                Arguments.of("2.in", readFile("/day3/2.in"), 48),
+                Arguments.of("1.in", readFile("/day3/1.in"), 93729253)
+        );
+    }
 }
