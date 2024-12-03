@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class LocationLists {
-    public long sumDistances(List<Integer> a, List<Integer> b) {
+class LocationLists {
+    long sumDistances(List<Integer> a, List<Integer> b) {
         Collections.sort(a);
         Collections.sort(b);
         long result = 0;
@@ -17,7 +17,7 @@ public class LocationLists {
         return result;
     }
 
-    public long getSimilarity(List<Integer> a, List<Integer> b) {
+    long getSimilarity(List<Integer> a, List<Integer> b) {
         Map<Integer, Long> occurrences = b.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
         return a.stream().mapToLong(i -> i * occurrences.getOrDefault(i, 0L)).sum();
     }
