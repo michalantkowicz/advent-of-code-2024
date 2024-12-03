@@ -1,29 +1,21 @@
 package com.adventofcode.day3;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 class CorruptedProgram {
     long sumProperMultiplications(String input) {
-        long result = 0;
-        String[] arguments = input.split("mul\\(");
-        for (int i = 1; i < arguments.length; i++) {
-            result += parseArgumentsAndTryMultiply(arguments[i]);
-        }
-        return result;
+        return splitAndSkipFirst(input, "mul\\(").stream()
+                .mapToInt(CorruptedProgram::parseArgumentsAndTryMultiply)
+                .sum();
     }
 
     long sumMultiplicationsIgnoringDonts(String input) {
         long totalResult = sumProperMultiplications(input);
-        long ignoredSum = sumIgnoredMultiplications(input.split("don't\\(\\)"));
+        long ignoredSum = splitAndSkipFirst(input, "don't\\(\\)").stream()
+                .mapToLong(x -> sumProperMultiplications(x.split("do\\(\\)")[0]))
+                .sum();
         return totalResult - ignoredSum;
-    }
-
-    private long sumIgnoredMultiplications(String[] split) {
-        long result = 0;
-        for(int i = 1; i < split.length; i++) {
-            result += Stream.of(split[i].split("do\\(\\)")).limit(1).mapToLong(this::sumProperMultiplications).sum();
-        }
-        return result;
     }
 
     private static int parseArgumentsAndTryMultiply(String arguments) {
@@ -38,5 +30,9 @@ class CorruptedProgram {
         } catch (Exception e) {
             return 0;
         }
+    }
+
+    private static List<String> splitAndSkipFirst(String string, String splitBy) {
+        return Stream.of(string.split(splitBy)).skip(1).toList();
     }
 }

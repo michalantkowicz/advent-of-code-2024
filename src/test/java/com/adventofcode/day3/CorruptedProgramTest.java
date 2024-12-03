@@ -45,7 +45,7 @@ class CorruptedProgramTest {
 
     private static Stream<Arguments> provideSecondInput() {
         return Stream.of(
-                Arguments.of("2.in", readFile("/day3/2.in"), 48),
+                Arguments.of("0_2.in", readFile("/day3/0_2.in"), 48),
                 Arguments.of("1.in", readFile("/day3/1.in"), 93729253)
         );
     }
