@@ -18,7 +18,7 @@ class WordFinderTest {
         WordFinder wordFinder = new WordFinder();
 
         // when
-        long count = wordFinder.countXmas(new StringMatrix(input, "\r\n"));
+        long count = wordFinder.countXmas(new StringMatrix(input));
 
         // then
         assertThat(count).isEqualTo(expected);
@@ -31,7 +31,7 @@ class WordFinderTest {
         WordFinder wordFinder = new WordFinder();
 
         // when
-        long count = wordFinder.countXmasCrossed(new StringMatrix(input, "\r\n"));
+        long count = wordFinder.countXmasCrossed(new StringMatrix(input));
 
         // then
         assertThat(count).isEqualTo(expected);

@@ -6,15 +6,15 @@ import java.util.List;
 public class StringMatrix implements Matrix<String> {
     private final List<String> lines = new ArrayList<>();
 
-    public StringMatrix(String string, String lineSeparator) {
-        for (String line : string.split(lineSeparator)) {
+    public StringMatrix(String string) {
+        string.lines().forEach(line -> {
             lines.add(line);
             if (line.length() != lines.getFirst().length()) {
                 throw new IllegalArgumentException("Provided string does not represent Matrix! " +
                         "Line number " + lines.size() + " has length of " + line.length() +
                         " while the first line has length " + lines.getFirst().length());
             }
-        }
+        });
     }
 
     @Override

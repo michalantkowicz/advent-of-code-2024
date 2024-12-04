@@ -22,7 +22,7 @@ public class StringMatrixTest {
                 ijkl
                 mnop
                 """;
-        Matrix<String> matrix = new StringMatrix(input, "\n");
+        Matrix<String> matrix = new StringMatrix(input);
 
         // when
         String result = matrix.at(x, y);
@@ -36,7 +36,7 @@ public class StringMatrixTest {
     public void shouldAlwaysReturnNullIfMatrixIsEmpty(int x, int y) {
         // given
         String input = "";
-        Matrix<String> matrix = new StringMatrix(input, "\n");
+        Matrix<String> matrix = new StringMatrix(input);
 
         // when
         String result = matrix.at(x, y);
@@ -71,6 +71,6 @@ public class StringMatrixTest {
                 """;
 
         // then
-        assertThatThrownBy(() -> new StringMatrix(input, "\n")).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("Line number 2 has length of 3");
+        assertThatThrownBy(() -> new StringMatrix(input)).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("Line number 2 has length of 3");
     }
 }
