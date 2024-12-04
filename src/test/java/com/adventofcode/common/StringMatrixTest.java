@@ -16,12 +16,7 @@ public class StringMatrixTest {
     @MethodSource("provideCharAtPosition")
     public void shouldReturnProperChar(int x, int y, String expected) {
         // given
-        String input = """
-                abcd
-                efgh
-                ijkl
-                mnop
-                """;
+        String input = "abcd\r\nefgh\r\nijkl\r\nmnop";
         Matrix<String> matrix = new StringMatrix(input);
 
         // when
@@ -63,12 +58,7 @@ public class StringMatrixTest {
     @Test
     public void shouldNotCreateImproperMatrix() {
         // given
-        String input = """
-                abcd
-                efg
-                ijkl
-                mnop
-                """;
+        String input = "abcd\r\nefg\r\nijkl\r\nmnop";
 
         // then
         assertThatThrownBy(() -> new StringMatrix(input)).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("Line number 2 has length of 3");
