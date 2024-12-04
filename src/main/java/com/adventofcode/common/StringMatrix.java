@@ -6,8 +6,8 @@ import java.util.List;
 public class StringMatrix implements Matrix<String> {
     private final List<String> lines = new ArrayList<>();
 
-    StringMatrix(String string) {
-        for (String line : string.split("\n")) {
+    public StringMatrix(String string) {
+        for (String line : string.split("\r\n")) {
             lines.add(line);
             if (line.length() != lines.getFirst().length()) {
                 throw new IllegalArgumentException("Provided string does not represent Matrix! " +
@@ -33,15 +33,5 @@ public class StringMatrix implements Matrix<String> {
             return null;
         }
         return String.valueOf(lines.get(y).charAt(x));
-    }
-
-    @Override
-    public String set(int x, int y, String value) {
-        if (value.length() != 1) {
-            throw new IllegalArgumentException("value length must be 1");
-        }
-        String line = lines.get(y);
-        lines.set(y, line.substring(0, x) + value + line.substring(x + 1));
-        return this.at(x, y);
     }
 }

@@ -1,5 +1,9 @@
 package com.adventofcode.common;
 
+import java.util.function.Function;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 public interface Matrix<T> {
     int width();
 
@@ -10,5 +14,9 @@ public interface Matrix<T> {
      */
     T at(int x, int y);
 
-    T set(int x, int y, T value);
+    default Stream<Pair<Integer>> streamIndices() {
+        return IntStream.range(0, width())
+                .mapToObj(i -> IntStream.range(0, height()).mapToObj(j -> new Pair<>(i, j)))
+                .flatMap(Function.identity());
+    }
 }
