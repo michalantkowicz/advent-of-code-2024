@@ -16,8 +16,13 @@ public class StringMatrixTest {
     @MethodSource("provideCharAtPosition")
     public void shouldReturnProperChar(int x, int y, String expected) {
         // given
-        String input = "abcd\r\nefgh\r\nijkl\r\nmnop";
-        Matrix<String> matrix = new StringMatrix(input);
+        String input = """
+                abcd
+                efgh
+                ijkl
+                mnop
+                """;
+        Matrix<String> matrix = new StringMatrix(input, "\n");
 
         // when
         String result = matrix.at(x, y);
@@ -31,7 +36,7 @@ public class StringMatrixTest {
     public void shouldAlwaysReturnNullIfMatrixIsEmpty(int x, int y) {
         // given
         String input = "";
-        Matrix<String> matrix = new StringMatrix(input);
+        Matrix<String> matrix = new StringMatrix(input, "\n");
 
         // when
         String result = matrix.at(x, y);
@@ -58,9 +63,14 @@ public class StringMatrixTest {
     @Test
     public void shouldNotCreateImproperMatrix() {
         // given
-        String input = "abcd\r\nefg\r\nijkl\r\nmnop";
+        String input = """
+                abcd
+                efg
+                ijkl
+                mnop
+                """;
 
         // then
-        assertThatThrownBy(() -> new StringMatrix(input)).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("Line number 2 has length of 3");
+        assertThatThrownBy(() -> new StringMatrix(input, "\n")).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("Line number 2 has length of 3");
     }
 }

@@ -6,8 +6,8 @@ import java.util.List;
 public class StringMatrix implements Matrix<String> {
     private final List<String> lines = new ArrayList<>();
 
-    public StringMatrix(String string) {
-        for (String line : string.split("\r\n")) {
+    public StringMatrix(String string, String lineSeparator) {
+        for (String line : string.split(lineSeparator)) {
             lines.add(line);
             if (line.length() != lines.getFirst().length()) {
                 throw new IllegalArgumentException("Provided string does not represent Matrix! " +
