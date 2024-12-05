@@ -33,22 +33,27 @@ public class TestUtils {
         return new ArrayList<>(getColumn(path, columnIndex).stream().map(Integer::valueOf).toList());
     }
 
-    public static List<List<String>> getRows(String path) {
+    public static List<List<String>> getRows(String path, String delimiter) {
         String input = readFile(path);
         List<List<String>> result = new ArrayList<>();
-        for (String line : input.split("\n")) {
-            result.add(Arrays.asList(line.split("\\s+")));
-        }
+        input.lines().forEach(line -> result.add(Arrays.asList(line.split(delimiter))));
         return result;
     }
 
-    public static List<List<Integer>> getIntRows(String path) {
+    public static List<List<Integer>> getIntRows(String path, String delimiter) {
         return new ArrayList<>(
-                getRows(path).stream()
+                getRows(path, delimiter).stream()
                         .map(line -> new ArrayList<>(
                                 line.stream().map(Integer::parseInt).toList()
                         ))
                         .toList()
         );
+    }
+
+    /**
+     * @return Lists of lists integers - in each line these integers are split by whitespaces
+     */
+    public static List<List<Integer>> getIntRows(String path) {
+        return getIntRows(path, "\\s+");
     }
 }
