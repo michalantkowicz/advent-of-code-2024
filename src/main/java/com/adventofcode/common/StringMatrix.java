@@ -27,11 +27,24 @@ public class StringMatrix implements Matrix<String> {
         return lines.isEmpty() ? 0 : lines.size();
     }
 
+    public String at(Pair<Integer> position) {
+        return at(position.a(), position.b());
+    }
+
     @Override
     public String at(int x, int y) {
         if (x < 0 || x >= width() || y < 0 || y >= height()) {
             return null;
         }
         return String.valueOf(lines.get(y).charAt(x));
+    }
+
+    @Override
+    public void set(int x, int y, String value) {
+        if (value.length() != 1) {
+            throw new IllegalArgumentException("value length must be 1");
+        }
+        String line = lines.get(y);
+        lines.set(y, line.substring(0, x) + value + line.substring(x + 1));
     }
 }

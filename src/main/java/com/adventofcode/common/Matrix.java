@@ -14,6 +14,8 @@ public interface Matrix<T> {
      */
     T at(int x, int y);
 
+    void set(int x, int y, T value);
+
     default Stream<Pair<Integer>> streamIndices() {
         return IntStream.range(0, width())
                 .mapToObj(i -> IntStream.range(0, height()).mapToObj(j -> new Pair<>(i, j)))
