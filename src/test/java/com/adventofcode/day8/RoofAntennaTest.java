@@ -27,7 +27,7 @@ class RoofAntennaTest {
     private static Stream<Arguments> provideFirstInput() {
         return Stream.of(
                 Arguments.of("0.in", new StringMatrix(readFile("/day8/0.in")), 14),
-                Arguments.of("1.in", new StringMatrix(readFile("/day8/1.in")), -1)
+                Arguments.of("1.in", new StringMatrix(readFile("/day8/1.in")), 348)
         );
     }
 }
