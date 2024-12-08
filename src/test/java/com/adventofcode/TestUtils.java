@@ -20,17 +20,27 @@ public class TestUtils {
         }
     }
 
-    public static List<String> getColumn(String path, int columnIndex) {
+    public static List<String> getColumn(String path, int columnIndex, final String delimiter) {
         String input = readFile(path);
         List<String> result = new ArrayList<>();
-        for (String line : input.split("\n")) {
-            result.add(line.split("\\s+")[columnIndex]);
-        }
+        input.lines().forEach(line -> result.add(line.split(delimiter)[columnIndex]));
         return result;
     }
 
+    public static List<Integer> getIntColumn(String path, int columnIndex, String delimiter) {
+        return new ArrayList<>(getColumn(path, columnIndex, delimiter).stream().map(Integer::valueOf).toList());
+    }
+
     public static List<Integer> getIntColumn(String path, int columnIndex) {
-        return new ArrayList<>(getColumn(path, columnIndex).stream().map(Integer::valueOf).toList());
+        return getIntColumn(path, columnIndex, "\\s+");
+    }
+
+    public static List<Long> getLongColumn(String path, int columnIndex, String delimiter) {
+        return new ArrayList<>(getColumn(path, columnIndex, delimiter).stream().map(Long::valueOf).toList());
+    }
+
+    public static List<Long> getLongColumn(String path, int columnIndex) {
+        return getLongColumn(path, columnIndex, "\\s+");
     }
 
     public static List<List<String>> getRows(String path, String delimiter) {

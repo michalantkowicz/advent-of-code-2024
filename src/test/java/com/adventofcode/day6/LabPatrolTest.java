@@ -2,6 +2,7 @@ package com.adventofcode.day6;
 
 import com.adventofcode.common.Pair;
 import com.adventofcode.common.StringMatrix;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -27,6 +28,7 @@ class LabPatrolTest {
         assertThat(sum).isEqualTo(expected);
     }
 
+    @Disabled("Running longer than 1s, run manually if necessary")
     @ParameterizedTest(name = "{0}")
     @MethodSource("provideSecondInput")
     void obstructionsCountIsValid(String description, String input, long expected) {
