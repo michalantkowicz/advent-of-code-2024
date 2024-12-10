@@ -24,10 +24,30 @@ class TopographicMapTest {
         assertThat(sum).isEqualTo(expected);
     }
 
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("provideSecondInput")
+    void sumOfTrailheadsRatingsIsValid(String description, IntMatrix matrix, long expected) {
+        // given
+        TopographicMap map = new TopographicMap();
+
+        // when
+        long sum = map.sumTrailheadsRatings(matrix);
+
+        // then
+        assertThat(sum).isEqualTo(expected);
+    }
+
     private static Stream<Arguments> provideFirstInput() {
         return Stream.of(
                 Arguments.of("0.in", new IntMatrix(readFile("/day10/0.in")), 36),
                 Arguments.of("1.in", new IntMatrix(readFile("/day10/1.in")), 652)
+        );
+    }
+
+    private static Stream<Arguments> provideSecondInput() {
+        return Stream.of(
+                Arguments.of("0.in", new IntMatrix(readFile("/day10/0.in")), 81),
+                Arguments.of("1.in", new IntMatrix(readFile("/day10/1.in")), 1432)
         );
     }
 }
