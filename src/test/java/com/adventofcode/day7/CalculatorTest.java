@@ -28,7 +28,7 @@ class CalculatorTest {
         assertThat(result).isEqualTo(expected);
     }
 
-    @Disabled("Running longer than 1s, run manually if necessary")
+    @Disabled("[day7 part 2] Running longer than 1s, run manually if necessary")
     @ParameterizedTest(name = "{0}")
     @MethodSource("provideSecondInput")
     void checkCalibrationResultWithConcatenations(String description, List<List<Long>> equations, long expected) {

@@ -28,7 +28,7 @@ class LabPatrolTest {
         assertThat(sum).isEqualTo(expected);
     }
 
-    @Disabled("Running longer than 1s, run manually if necessary")
+    @Disabled("[day6 part 2] Running longer than 1s, run manually if necessary")
     @ParameterizedTest(name = "{0}")
     @MethodSource("provideSecondInput")
     void obstructionsCountIsValid(String description, String input, long expected) {

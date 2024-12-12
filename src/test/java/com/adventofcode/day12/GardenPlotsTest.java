@@ -53,7 +53,7 @@ class GardenPlotsTest {
                 Arguments.of("0_2c.in", readFile("/day12/0_2c.in"), 368),
                 Arguments.of("0_2d.in", readFile("/day12/0_2d.in"), 436),
                 Arguments.of("0.in", readFile("/day12/0.in"), 1206),
-                Arguments.of("1.in", readFile("/day12/1.in"), -1)
+                Arguments.of("1.in", readFile("/day12/1.in"), 858684)
         );
     }
 }

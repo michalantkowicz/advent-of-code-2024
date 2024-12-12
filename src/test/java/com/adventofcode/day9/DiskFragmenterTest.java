@@ -29,7 +29,7 @@ class DiskFragmenterTest {
         assertThat(checksum).isEqualTo(expected);
     }
 
-    @Disabled("Running longer than 1s, run manually if necessary")
+    @Disabled("[day9 part 2] Running longer than 1s, run manually if necessary")
     @ParameterizedTest(name = "{0}")
     @MethodSource("provideSecondInput")
     void checksumIsValidWhenMovingWholeFiles(String description, String blocksString, long expected) {
