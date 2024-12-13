@@ -1,7 +1,6 @@
 package com.adventofcode.day13;
 
 import com.adventofcode.common.Pair;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -29,7 +28,6 @@ class ArcadeGamesTest {
         assertThat(cost).isEqualTo(expected);
     }
 
-    @Disabled
     @ParameterizedTest(name = "{0}")
     @MethodSource("provideSecondInput")
     void shouldReturnProperCostForBigPrizes(String description, String input, long expected) {
@@ -37,7 +35,7 @@ class ArcadeGamesTest {
         ArcadeGames games = new ArcadeGames();
         List<Arcade> arcades = parseArcades(input);
         List<Arcade> scaledArcades = arcades.stream().map(a -> new Arcade(
-                a.A(), a.B(), new Pair<>(a.prize().a() * 10000000000000L, a.prize().b() * 10000000000000L)
+                a.A(), a.B(), new Pair<>(a.prize().a() + 10000000000000L, a.prize().b() + 10000000000000L)
         )).toList();
 
         // when
@@ -70,6 +68,13 @@ class ArcadeGamesTest {
                 buffer.add(new Pair<>(parseLong(first), parseLong(second)));
             }
         }
+        result.add(
+                new Arcade(
+                        buffer.get(0),
+                        buffer.get(1),
+                        buffer.get(2)
+                )
+        );
         return result;
     }
 
@@ -82,8 +87,8 @@ class ArcadeGamesTest {
 
     private static Stream<Arguments> provideSecondInput() {
         return Stream.of(
-                Arguments.of("0.in", readFile("/day13/0.in"), 480),
-                Arguments.of("1.in", readFile("/day13/1.in"), 36571)
+                Arguments.of("0.in", readFile("/day13/0.in"), 875318608908L),
+                Arguments.of("1.in", readFile("/day13/1.in"), 85527711500010L)
         );
     }
 }

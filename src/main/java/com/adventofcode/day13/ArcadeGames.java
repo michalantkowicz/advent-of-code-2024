@@ -1,31 +1,28 @@
 package com.adventofcode.day13;
 
+import com.adventofcode.common.Pair;
+
 import java.util.List;
 
 class ArcadeGames {
     public long calculateMinimalCost(List<Arcade> arcades) {
         long cost = 0;
         for (Arcade arcade : arcades) {
-            Long minimalCost = null;
-            for (long i = 1; i <= (long) Math.ceil(arcade.prize().a() / arcade.A().a()); i++) {
-                for (long j = 0; j <= (long) Math.ceil(arcade.prize().a() / arcade.B().a()); j++) {
-                    long a = i * arcade.A().a() + j * arcade.B().a();
-                    long b = i * arcade.A().b() + j * arcade.B().b();
-                    if (a > arcade.prize().a() || b > arcade.prize().b()) {
-                        break;
-                    } else {
-                        if (a == arcade.prize().a() && b == arcade.prize().b()) {
-                            if (minimalCost == null || i * 3 + j < minimalCost) {
-                                minimalCost = i * 3 + j;
-                            }
-                        }
-                    }
+            long parallelogramArea = parallelogramArea(arcade.B(), arcade.prize());
+            long subParallelogramArea = parallelogramArea(arcade.B(), arcade.A());
+            if (parallelogramArea % subParallelogramArea == 0) {
+                long aMul = parallelogramArea / subParallelogramArea;
+                long bTotal = arcade.prize().a() - (aMul * arcade.A().a());
+                if (bTotal % arcade.B().a() == 0) {
+                    long bMul = bTotal / arcade.B().a();
+                    cost += bMul + 3 * aMul;
                 }
-            }
-            if (minimalCost != null) {
-                cost += minimalCost;
             }
         }
         return cost;
+    }
+
+    private static long parallelogramArea(Pair<Long> first, Pair<Long> second) {
+        return Math.abs(first.a() * second.b() - first.b() * second.a());
     }
 }
