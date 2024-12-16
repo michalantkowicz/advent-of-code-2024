@@ -25,6 +25,40 @@ public enum Direction {
         };
     }
 
+    public Direction turnRight(int times) {
+        Direction result = this;
+        for(int i = 0; i < times; i++) {
+            result = result.turnRight();
+        }
+        return result;
+    }
+
+    public Direction turnLeft() {
+        return switch (this) {
+            case TOP -> LEFT;
+            case LEFT -> DOWN;
+            case DOWN -> RIGHT;
+            case RIGHT -> TOP;
+        };
+    }
+
+    public Direction turnLeft(int times) {
+        Direction result = this;
+        for(int i = 0; i < times; i++) {
+            result = result.turnLeft();
+        }
+        return result;
+    }
+
+    public Direction turnAround() {
+        return switch (this) {
+            case TOP -> DOWN;
+            case LEFT -> RIGHT;
+            case DOWN -> TOP;
+            case RIGHT -> LEFT;
+        };
+    }
+
     public Pair<Integer> moveFrom(Pair<Integer> position) {
         return new Pair<>(position.a() + this.getVector().a(), position.b() + this.getVector().b());
     }
