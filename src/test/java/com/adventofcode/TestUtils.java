@@ -1,5 +1,7 @@
 package com.adventofcode;
 
+import com.adventofcode.common.Pair;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -9,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import static java.lang.Integer.parseInt;
 
 public class TestUtils {
     public static String readFile(String path) {
@@ -65,5 +69,13 @@ public class TestUtils {
      */
     public static List<List<Integer>> getIntRows(String path) {
         return getIntRows(path, "\\s+");
+    }
+
+    public static List<Pair<Integer>> getIntPairs(String path, String delimiter) {
+        return new ArrayList<>(
+                readFile(path).lines()
+                        .map(line -> new Pair<>(parseInt(line.split(delimiter)[0]), parseInt(line.split(delimiter)[1])))
+                        .toList()
+        );
     }
 }

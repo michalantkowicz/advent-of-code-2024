@@ -18,6 +18,16 @@ public class IntMatrix implements Matrix<Integer> {
         });
     }
 
+    public IntMatrix(int width, int height, int fill) {
+        for (int i = 0; i < height; i++) {
+            List<Integer> l = new ArrayList<>();
+            for (int j = 0; j < width; j++) {
+                l.add(fill);
+            }
+            lines.add(l);
+        }
+    }
+
     @Override
     public int width() {
         return lines.isEmpty() ? 0 : lines.getFirst().size();

@@ -108,5 +108,3 @@ class ReindeerMaze {
         return p.stream().min(Comparator.comparing(distance::get)).orElseThrow();
     }
 }
-
-//492 too low
