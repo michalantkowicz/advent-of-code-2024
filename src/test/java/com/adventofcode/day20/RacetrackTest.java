@@ -37,6 +37,19 @@ class RacetrackTest {
         Assertions.assertThat(count).isEqualTo(expected);
     }
 
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("provideSecondInput")
+    void shouldReturnProperCountOfCheatsForAtLeastValueWithLongerCheats(String description, StringMatrix map, int picoseconds, long expected) {
+        // given
+        Racetrack racetrack = new Racetrack();
+
+        // when
+        long count = racetrack.countCheatsForAtLeastWithLongerCheats(map, picoseconds);
+
+        // then
+        Assertions.assertThat(count).isEqualTo(expected);
+    }
+
     private static Stream<Arguments> provideValidationInput() {
         return Stream.of(
                 Arguments.of("0_a.in", readFile("/day20/0.in"), 2, 14),
@@ -56,6 +69,13 @@ class RacetrackTest {
     private static Stream<Arguments> provideFirstInput() {
         return Stream.of(
                 Arguments.of("1.in", readFile("/day20/1.in"), 100, 1426)
+        );
+    }
+
+    private static Stream<Arguments> provideSecondInput() {
+        return Stream.of(
+                Arguments.of("0.in", readFile("/day20/0.in"), 50, 285),
+                Arguments.of("1.in", readFile("/day20/1.in"), 100, 1000697)
         );
     }
 }
