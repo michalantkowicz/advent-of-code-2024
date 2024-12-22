@@ -47,6 +47,10 @@ public class TestUtils {
         return getLongColumn(path, columnIndex, "\\s+");
     }
 
+    public static List<String> getLines(String path) {
+        return readFile(path).lines().toList();
+    }
+
     public static List<List<String>> getRows(String path, String delimiter) {
         String input = readFile(path);
         List<List<String>> result = new ArrayList<>();
