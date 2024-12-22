@@ -23,6 +23,52 @@ abstract class Keypad {
         optimizePaths();
     }
 
+    void overridePaths(Map<Pair<Pair<Integer>>, List<String>> override) {
+        paths.putAll(override);
+    }
+
+    List<Map<Pair<Pair<Integer>>, List<String>>> possibleVariants() {
+        List<Pair<Pair<Integer>>> reversibles = paths.keySet().stream().filter(k -> paths.get(k).size() > 1 && !paths.get(k).getFirst().equals(paths.get(k).getLast()) && checkPath(k.a(), k.b(), paths.get(k).reversed())).toList();
+        return generateCombinations(paths, reversibles);
+    }
+
+    public static List<Map<Pair<Pair<Integer>>, List<String>>> generateCombinations(
+            Map<Pair<Pair<Integer>>, List<String>> x,
+            List<Pair<Pair<Integer>>> reversibles) {
+
+        List<Map<Pair<Pair<Integer>>, List<String>>> result = new ArrayList<>();
+        generateCombinationsRecursive(x, reversibles, 0, new HashMap<>(), result);
+        return result;
+    }
+
+    private static void generateCombinationsRecursive(
+            Map<Pair<Pair<Integer>>, List<String>> x,
+            List<Pair<Pair<Integer>>> reversibles,
+            int index,
+            Map<Pair<Pair<Integer>>, List<String>> currentMap,
+            List<Map<Pair<Pair<Integer>>, List<String>>> result) {
+
+        if (index == reversibles.size()) {
+            result.add(new HashMap<>(currentMap));
+            return;
+        }
+
+        Pair<Pair<Integer>> pair = reversibles.get(index);
+        List<String> originalList = x.get(pair);
+
+        if (originalList != null) {
+            currentMap.put(pair, new ArrayList<>(originalList));
+            generateCombinationsRecursive(x, reversibles, index + 1, currentMap, result);
+
+            List<String> reversedList = new ArrayList<>(originalList);
+            Collections.reverse(reversedList);
+            currentMap.put(pair, reversedList);
+            generateCombinationsRecursive(x, reversibles, index + 1, currentMap, result);
+
+            currentMap.remove(pair);
+        }
+    }
+
     private void calculatePaths() {
         for (Pair<Integer> start : keypad.streamIndices().filter(this::isNotWall).toList()) {
             Map<Pair<Integer>, Long> distance = new HashMap<>();
@@ -108,11 +154,13 @@ abstract class Keypad {
                 paths.put(k, pathDesc);
             }
 
-            if(paths.get(k).size() > 1 && paths.get(k).getLast().equals("v") && checkPath(k.a(), k.b(), paths.get(k).reversed())) {
-                paths.put(k, paths.get(k).reversed());
-            }
-            if(paths.get(k).size() > 1 && paths.get(k).getFirst().equals(">") && paths.get(k).getLast().equals("^")) {
-                paths.put(k, paths.get(k).reversed());
+            if (this instanceof NumericKeypad) {
+                if (paths.get(k).size() > 1 && paths.get(k).getLast().equals("v") && checkPath(k.a(), k.b(), paths.get(k).reversed())) {
+                    paths.put(k, paths.get(k).reversed());
+                }
+                if (paths.get(k).size() > 1 && paths.get(k).getFirst().equals(">") && paths.get(k).getLast().equals("^")) {
+                    paths.put(k, paths.get(k).reversed());
+                }
             }
         }
     }
