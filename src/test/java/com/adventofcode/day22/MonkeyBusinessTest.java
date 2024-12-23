@@ -24,10 +24,30 @@ class MonkeyBusinessTest {
         Assertions.assertThat(sum).isEqualTo(expected);
     }
 
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("provideSecondInput")
+    void shouldCalculateProperTotalSum(String description, List<Long> secrets, long expected) {
+        // given
+        MonkeyBusiness business = new MonkeyBusiness();
+
+        // when
+        long sum = business.getMaxSum(secrets);
+
+        // then
+        Assertions.assertThat(sum).isEqualTo(expected);
+    }
+
     private static Stream<Arguments> provideFirstInput() {
         return Stream.of(
                 Arguments.of("0.in", getLines("/day22/0.in").stream().map(Long::parseLong).toList(), 37327623),
                 Arguments.of("1.in", getLines("/day22/1.in").stream().map(Long::parseLong).toList(), 18941802053L)
+        );
+    }
+
+    private static Stream<Arguments> provideSecondInput() {
+        return Stream.of(
+                Arguments.of("0_2.in", getLines("/day22/0_2.in").stream().map(Long::parseLong).toList(), 23),
+                Arguments.of("1.in", getLines("/day22/1.in").stream().map(Long::parseLong).toList(), 2218)
         );
     }
 }
