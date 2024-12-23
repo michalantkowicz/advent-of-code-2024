@@ -24,10 +24,30 @@ class LanPartyTest {
         Assertions.assertThat(count).isEqualTo(expected);
     }
 
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("provideSecondInput")
+    void shouldReturnProperPassword(String description, List<String> input, String expected) {
+        // given
+        LanParty lanParty = new LanParty();
+
+        // when
+        String password = lanParty.findPassword(input);
+
+        // then
+        Assertions.assertThat(password).isEqualTo(expected);
+    }
+
     private static Stream<Arguments> provideFirstInput() {
         return Stream.of(
                 Arguments.of("0.in", getLines("/day23/0.in"), 7),
                 Arguments.of("1.in", getLines("/day23/1.in"), 1378)
+        );
+    }
+
+    private static Stream<Arguments> provideSecondInput() {
+        return Stream.of(
+                Arguments.of("0.in", getLines("/day23/0.in"), "co,de,ka,ta"),
+                Arguments.of("1.in", getLines("/day23/1.in"), "bs,ey,fq,fy,he,ii,lh,ol,tc,uu,wl,xq,xv")
         );
     }
 }
