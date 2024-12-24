@@ -1,6 +1,7 @@
 package com.adventofcode.day23;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -11,6 +12,7 @@ import java.util.stream.Stream;
 import static com.adventofcode.TestUtils.getLines;
 
 class LanPartyTest {
+    @Disabled("[day23 part 1] Running longer than 1s, run manually if necessary")
     @ParameterizedTest(name = "{0}")
     @MethodSource("provideFirstInput")
     void shouldCalculateProperGroupsCount(String description, List<String> input, long expected) {

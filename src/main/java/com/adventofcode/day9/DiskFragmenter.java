@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class DiskFragmenter {
-    public long compactAndGetChecksum(List<Integer> blocks) {
+    long compactAndGetChecksum(List<Integer> blocks) {
         long checksum = 0;
         long position = 0;
         for (int i = 0; i < blocks.size(); i++) {

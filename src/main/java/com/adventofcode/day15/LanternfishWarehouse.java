@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class LanternfishWarehouse {
-    public long getBoxesCoordinatesSum(StringMatrix map, List<Direction> directions) {
+class LanternfishWarehouse {
+    long getBoxesCoordinatesSum(StringMatrix map, List<Direction> directions) {
         for (Direction direction : directions) {
             Pair<Integer> robotPosition = map.streamIndices().filter(p -> "@".equals(map.at(p))).findFirst().orElseThrow();
             List<Pair<Integer>> reversed = getPositionsToMove(map, robotPosition, direction).reversed();

@@ -5,7 +5,7 @@ import com.adventofcode.common.Pair;
 import java.util.List;
 
 class ArcadeGames {
-    public long calculateMinimalCost(List<Arcade> arcades) {
+    long calculateMinimalCost(List<Arcade> arcades) {
         long cost = 0;
         for (Arcade arcade : arcades) {
             long parallelogramArea = parallelogramArea(arcade.B(), arcade.prize());

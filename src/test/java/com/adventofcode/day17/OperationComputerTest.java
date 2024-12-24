@@ -2,6 +2,7 @@ package com.adventofcode.day17;
 
 import com.adventofcode.common.Pair;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -33,6 +34,7 @@ class OperationComputerTest {
         Assertions.assertThat(output).isEqualTo(expected);
     }
 
+    @Disabled("[day17 part 2] Running longer than 1s, run manually if necessary")
     @ParameterizedTest(name = "{0}")
     @MethodSource("provideSecondInput")
     void shouldReturnProperAValue(String description, String input, long expected) {

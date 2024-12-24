@@ -7,7 +7,7 @@ import com.adventofcode.common.StringMatrix;
 import java.util.*;
 
 abstract class Keypad {
-    public static final String ENTER = "A";
+    static final String ENTER = "A";
 
     protected StringMatrix keypad;
     protected Pair<Integer> currentPointer;
@@ -32,7 +32,7 @@ abstract class Keypad {
         return generateCombinations(paths, reversibles);
     }
 
-    public static List<Map<Pair<Pair<Integer>>, List<String>>> generateCombinations(
+    static List<Map<Pair<Pair<Integer>>, List<String>>> generateCombinations(
             Map<Pair<Pair<Integer>>, List<String>> x,
             List<Pair<Pair<Integer>>> reversibles) {
 

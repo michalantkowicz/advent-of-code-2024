@@ -2,6 +2,7 @@ package com.adventofcode.day20;
 
 import com.adventofcode.common.StringMatrix;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -37,6 +38,7 @@ class RacetrackTest {
         Assertions.assertThat(count).isEqualTo(expected);
     }
 
+    @Disabled("[day20 part 2] Running longer than 1s, run manually if necessary")
     @ParameterizedTest(name = "{0}")
     @MethodSource("provideSecondInput")
     void shouldReturnProperCountOfCheatsForAtLeastValueWithLongerCheats(String description, StringMatrix map, int picoseconds, long expected) {

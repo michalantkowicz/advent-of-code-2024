@@ -17,7 +17,7 @@ class PlutoPebbles {
         private final Predicate<String> isApplicable;
         private final Function<String, List<String>> process;
 
-        public Rule(Predicate<String> isApplicable, Function<String, List<String>> process) {
+        Rule(Predicate<String> isApplicable, Function<String, List<String>> process) {
             this.isApplicable = isApplicable;
             this.process = process;
         }
