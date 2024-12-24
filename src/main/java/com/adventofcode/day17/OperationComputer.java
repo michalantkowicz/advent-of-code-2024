@@ -46,12 +46,43 @@ class OperationComputer {
 
     String getOutput(Map<String, Long> registers, List<Pair<Integer>> input) {
         this.registers.putAll(registers);
-        output.clear();
         int index = 0;
         while (index < input.size()) {
             index = instructions.get(input.get(index).a()).apply(index, input.get(index).b());
         }
         return output.stream().map(String::valueOf).collect(Collectors.joining(","));
+    }
+
+    private String checkOutput(Map<String, Long> registers, List<Pair<Integer>> input, String expected) {
+        this.registers.putAll(registers);
+        int index = 0;
+        while (index < input.size()) {
+            index = instructions.get(input.get(index).a()).apply(index, input.get(index).b());
+            if(index == 7 && !expected.startsWith(output.stream().map(String::valueOf).collect(Collectors.joining(",")))) {
+                break;
+            }
+        }
+        return output.stream().map(String::valueOf).collect(Collectors.joining(","));
+    }
+
+    long findAValue(Map<String, Long> registers, List<Pair<Integer>> input) {
+        String expected = input.stream().map(p -> p.a() + "," + p.b()).collect(Collectors.joining(","));
+
+        for (long i = 0; i < Long.MAX_VALUE; i += 1L) {
+            Map<String, Long> tempRegisters = Map.of(
+                    "A", i,
+                    "B", registers.get("B"),
+                    "C", registers.get("C")
+            );
+            output.clear();
+
+            String o = checkOutput(tempRegisters, input, expected);
+            if (o.equals(expected)) {
+                return i;
+            }
+        }
+
+        throw new IllegalStateException("Solution has not been found!");
     }
 
     private long getComboOperand(long i) {

@@ -33,6 +33,22 @@ class OperationComputerTest {
         Assertions.assertThat(output).isEqualTo(expected);
     }
 
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("provideSecondInput")
+    void shouldReturnProperAValue(String description, String input, long expected) {
+        // given
+        OperationComputer computer = new OperationComputer();
+        String[] inputParts = input.split("(?m)^\\s*$");
+        Map<String, Long> registers = parseRegisters(inputParts[0]);
+        List<Pair<Integer>> operationsWithOperands = parseOperations(inputParts[1]);
+
+        // when
+        long aValue = computer.findAValue(registers, operationsWithOperands);
+        System.out.println(aValue);
+        // then
+        Assertions.assertThat(aValue).isEqualTo(expected);
+    }
+
     private Map<String, Long> parseRegisters(String input) {
         Map<String, Long> registers = new HashMap<>();
         List<String> lines = input.lines().toList();
@@ -59,10 +75,10 @@ class OperationComputerTest {
         );
     }
 
-//    private static Stream<Arguments> provideSecondInput() {
-//        return Stream.of(
-//                Arguments.of("0_2.in", readFile("/day17/0_2.in"), 117440L),
-//                Arguments.of("1.in", readFile("/day17/1.in"), -1L)
-//        );
-//    }
+    private static Stream<Arguments> provideSecondInput() {
+        return Stream.of(
+                Arguments.of("0_2.in", readFile("/day17/0_2.in"), 117440L),
+                Arguments.of("1.in", readFile("/day17/1.in"), -1L)
+        );
+    }
 }
