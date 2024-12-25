@@ -79,8 +79,8 @@ class OperationComputerTest {
 
     private static Stream<Arguments> provideSecondInput() {
         return Stream.of(
-//                Arguments.of("0_2.in", readFile("/day17/0_2.in"), 117440L),
-                Arguments.of("1.in", readFile("/day17/1.in"), -1L)
+                Arguments.of("0_2.in", readFile("/day17/0_2.in"), 117440L),
+                Arguments.of("1.in", readFile("/day17/1.in"), 202322348616234L)
         );
     }
 }

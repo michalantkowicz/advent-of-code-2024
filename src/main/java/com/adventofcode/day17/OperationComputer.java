@@ -53,14 +53,11 @@ class OperationComputer {
         return output.stream().map(String::valueOf).collect(Collectors.joining(","));
     }
 
-    private String checkOutput(Map<String, Long> registers, List<Pair<Integer>> input, String expected) {
+    private String checkOutput(Map<String, Long> registers, List<Pair<Integer>> input) {
         this.registers.putAll(registers);
         int index = 0;
         while (index < input.size()) {
             index = instructions.get(input.get(index).a()).apply(index, input.get(index).b());
-            if(index == 7 && !expected.startsWith(output.stream().map(String::valueOf).collect(Collectors.joining(",")))) {
-                break;
-            }
         }
         return output.stream().map(String::valueOf).collect(Collectors.joining(","));
     }
@@ -68,22 +65,38 @@ class OperationComputer {
     long findAValue(Map<String, Long> registers, List<Pair<Integer>> input) {
         String expected = input.stream().map(p -> p.a() + "," + p.b()).collect(Collectors.joining(","));
 
-        for (long i = 0; i < Long.MAX_VALUE; i += 1L) {
+        long start = Long.parseLong("1" + "0".repeat((input.size() * 2) - 1), 8);
+        int maxStep = (input.size() * 2) - 3;
+        int step = maxStep;
+
+        for (long i = start; i <= Long.MAX_VALUE; i += (long) Math.pow(8, Math.max(step, 0))) {
             Map<String, Long> tempRegisters = Map.of(
-                    "A", 64*i+7,
+                    "A", i,
                     "B", registers.get("B"),
                     "C", registers.get("C")
             );
             output.clear();
 
-            String o = checkOutput(tempRegisters, input, expected);
-            System.out.println(o);
-            if (o.equals(expected)) {
+            String output = checkOutput(tempRegisters, input);
+            if (output.equals(expected)) {
                 return i;
+            } else {
+                step = maxStep - howManyOfLastMatches(output, expected);
             }
         }
-
         throw new IllegalStateException("Solution has not been found!");
+    }
+
+    private int howManyOfLastMatches(String o, String expected) {
+        String[] a = o.split(",");
+        String[] b = expected.split(",");
+
+        int sum = 0;
+        for (int i = a.length - 1; i >= 0; i--) {
+            if (a[i].equals(b[i])) sum++;
+            else break;
+        }
+        return sum;
     }
 
     private long getComboOperand(long i) {
