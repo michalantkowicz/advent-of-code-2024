@@ -6,9 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static com.adventofcode.TestUtils.readFile;
@@ -21,10 +19,32 @@ class CrossedWiresTest {
         CrossedWires wires = new CrossedWires();
 
         // when
-        long number = wires.calculateNumber(values, input);
+        long number = wires.calculateNumber(values, input, false);
 
         // then
         Assertions.assertThat(number).isEqualTo(expected);
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("provideSecondInput")
+    void printoutNodes(String description, Map<String, Integer> values, List<Input> input) {
+        // given
+        CrossedWires wires = new CrossedWires();
+        input = new ArrayList<>(input);
+        input.sort(Comparator.comparing(i -> i.records().a()));
+
+        // when
+        wires.calculateNumber(values, input, true);
+
+        // then
+        // Take the output and put to https://dreampuf.github.io/GraphvizOnline/
+        // Search for z nodes that do not have:
+        //   * one green input arrow that is derived from x and y nodes of the same number (e.g. x11, y11 for z11)
+        //   * one green input arrow that is derived from node that has two red arrows from previous cluster
+        // Search for node that should be swapped with this z node and swap it
+        // For given input pairs are: [z11, vkq], [z24, mmk], [z38, hqh], [pvb, qdq]
+
+        Assertions.assertThat(true).isTrue();
     }
 
     private static Map<String, Integer> parseValues(String file) {
@@ -44,6 +64,12 @@ class CrossedWiresTest {
                 Arguments.of("0_1.in", parseValues(readFile("/day24/0_1.in")), parseInput(readFile("/day24/0_1.in")), 4),
                 Arguments.of("0.in", parseValues(readFile("/day24/0.in")), parseInput(readFile("/day24/0.in")), 2024),
                 Arguments.of("1.in", parseValues(readFile("/day24/1.in")), parseInput(readFile("/day24/1.in")), 48063513640678L)
+        );
+    }
+
+    private static Stream<Arguments> provideSecondInput() {
+        return Stream.of(
+                Arguments.of("1.in", parseValues(readFile("/day24/1.in")), parseInput(readFile("/day24/1.in")))
         );
     }
 }
