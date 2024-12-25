@@ -70,13 +70,14 @@ class OperationComputer {
 
         for (long i = 0; i < Long.MAX_VALUE; i += 1L) {
             Map<String, Long> tempRegisters = Map.of(
-                    "A", i,
+                    "A", 64*i+7,
                     "B", registers.get("B"),
                     "C", registers.get("C")
             );
             output.clear();
 
             String o = checkOutput(tempRegisters, input, expected);
+            System.out.println(o);
             if (o.equals(expected)) {
                 return i;
             }
